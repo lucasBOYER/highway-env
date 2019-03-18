@@ -13,9 +13,9 @@ class EnvViewer(object):
     """
         A viewer to render a highway driving environment.
     """
-    SCREEN_WIDTH = 600
-    SCREEN_HEIGHT = 150
-    SAVE_IMAGES = False
+    SCREEN_WIDTH = 1280*8//10
+    SCREEN_HEIGHT = 720//2
+    SAVE_IMAGES = True
 
     def __init__(self, env):
         self.env = env
@@ -44,10 +44,10 @@ class EnvViewer(object):
         :param agent_display: a callback provided by the agent to display on surfaces
         """
         if self.agent_display is None:
-            if self.SCREEN_WIDTH > self.SCREEN_HEIGHT:
-                self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, 2 * self.SCREEN_HEIGHT))
-            else:
-                self.screen = pygame.display.set_mode((2 * self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+            # if self.SCREEN_WIDTH > self.SCREEN_HEIGHT:
+            #     self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, 2 * self.SCREEN_HEIGHT))
+            # else:
+            #     self.screen = pygame.display.set_mode((2 * self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
             self.agent_surface = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.agent_display = agent_display
 
@@ -58,10 +58,11 @@ class EnvViewer(object):
         """
         if hasattr(self.env.action_space, 'n'):
             actions = [self.env.ACTIONS[a] for a in actions]
-        self.vehicle_trajectory = self.env.vehicle.predict_trajectory(actions,
-                                                                      1 / self.env.POLICY_FREQUENCY,
-                                                                      1 / 3 / self.env.POLICY_FREQUENCY,
-                                                                      1 / self.env.SIMULATION_FREQUENCY)
+        if len(actions) > 1 and False:
+            self.vehicle_trajectory = self.env.vehicle.predict_trajectory(actions,
+                                                                          1 / self.env.POLICY_FREQUENCY,
+                                                                          1 / 3 / self.env.POLICY_FREQUENCY,
+                                                                          1 / self.env.SIMULATION_FREQUENCY)
 
     def handle_events(self):
         """

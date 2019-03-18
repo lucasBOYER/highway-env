@@ -176,9 +176,9 @@ class AbstractEnv(gym.Env):
             # Automatically render intermediate simulation steps if a viewer has been launched
             self._automatic_rendering()
 
-            # Stop at terminal states
-            if self.done or self._is_terminal():
-                break
+            # # Stop at terminal states
+            # if self.done or self._is_terminal():
+            #     break
         self.enable_auto_render = False
 
     def render(self, mode='human'):
